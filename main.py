@@ -1,6 +1,7 @@
 import flights_data
 from datetime import datetime
 import sqlalchemy
+import csv
 
 IATA_LENGTH = 3
 
@@ -95,6 +96,25 @@ def print_results(results):
             print(f"{result['ID']}. {origin} -> {dest} by {airline}, Delay: {delay} Minutes")
         else:
             print(f"{result['ID']}. {origin} -> {dest} by {airline}")
+
+    # Only ask to export if there are results
+    if len(results) > 0:
+        print_input = input("Would you like to export this data to a CSV file? (y/n): ")
+        if print_input.lower() == "y":
+            filename = input("Enter filename: ")
+
+            # Fix the filename if needed
+            if not filename.lower().endswith(".csv"):
+                filename = filename + ".csv"
+
+            # Saving the file
+            with open(filename, 'w', newline='') as csv_file:
+                writer = csv.writer(csv_file)
+                writer.writerow(results[0]._fields)
+                writer.writerows(results)
+
+            # Printing confirmation
+            print(f"{filename} file was created. Data exported successfully")
 
 
 def show_menu_and_get_input():
