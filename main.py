@@ -110,7 +110,7 @@ def show_menu_and_get_input():
     # Input loop
     while True:
         try:
-            choice = int(input())
+            choice = int(input("Please select an option: "))
             if choice in FUNCTIONS:
                 return FUNCTIONS[choice][0]
         except ValueError as e:
