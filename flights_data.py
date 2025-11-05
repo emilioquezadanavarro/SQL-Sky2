@@ -24,7 +24,7 @@ def execute_query(query, params):
             result = conn.execute(text(query), params)
             return result.fetchall()
 
-    except Exception as e:
+    except ValueError as e:
         print("Query error:", e)
         return []
 
@@ -40,7 +40,7 @@ def get_flight_by_id(flight_id):
 def get_flights_by_date(day, month, year):
     """
     Searches for flight details using flight DATE.
-    If the flight was found, returns a list with a single record.
+
     """
     params = {'day': day, 'month': month, 'year': year }
     return execute_query(QUERY_FLIGHT_BY_DATE, params)
@@ -48,7 +48,7 @@ def get_flights_by_date(day, month, year):
 def get_delayed_flights_by_airline(airline_input):
     """
     Searches for delayed flights for a given airline name.
-    If the flight was found, returns a list with a single record.
+
     """
     params = {'name': f'%{airline_input}%'}
     return execute_query(QUERY_DELAYED_FLIGHTS_BY_AIRLINE, params)
@@ -56,7 +56,6 @@ def get_delayed_flights_by_airline(airline_input):
 def get_delayed_flights_by_airport(airport_input):
     """
     Searches for delayed flights for a given airport name.
-    If the flight was found, returns a list with a single record.
 
     """
     params = {'code': airport_input.upper()}
